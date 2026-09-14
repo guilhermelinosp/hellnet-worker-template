@@ -11,16 +11,16 @@ permissions:
 
 jobs:
   lint:
-    uses: guilhermelinosp/templates/.github/workflows/shellcheck.yml@9a3e1c923824fbd71b5dad45976c6e66ba2a1a01 # main
+    uses: guilhermelinosp/templates/.github/workflows/shellcheck.yml@745ef1ca8288cd320b0b4dcf1485e34003945c79
 
   merge-check:
-    uses: guilhermelinosp/templates/.github/workflows/merge-check.yml@9a3e1c923824fbd71b5dad45976c6e66ba2a1a01 # main
+    uses: guilhermelinosp/templates/.github/workflows/merge-check.yml@745ef1ca8288cd320b0b4dcf1485e34003945c79
 
   gitleaks:
-    uses: guilhermelinosp/templates/.github/workflows/gitleaks.yml@9a3e1c923824fbd71b5dad45976c6e66ba2a1a01 # main
+    uses: guilhermelinosp/templates/.github/workflows/gitleaks.yml@745ef1ca8288cd320b0b4dcf1485e34003945c79
 
   labeler:
-    uses: guilhermelinosp/templates/.github/workflows/labeler.yml@9a3e1c923824fbd71b5dad45976c6e66ba2a1a01
+    uses: guilhermelinosp/templates/.github/workflows/labeler.yml@745ef1ca8288cd320b0b4dcf1485e34003945c79
     with:
       app-client-id: ${{ vars.HELLNET_ACTIONS_CLIENT_ID }}
     secrets: inherit
@@ -29,6 +29,6 @@ jobs:
   # module integrity, vet, race tests + coverage, canonical lint, build,
   # dependency review on PRs.
   go-quality:
-    uses: guilhermelinosp/templates/.github/workflows/go-quality.yml@9a3e1c923824fbd71b5dad45976c6e66ba2a1a01 # main
+    uses: guilhermelinosp/templates/.github/workflows/go-quality.yml@745ef1ca8288cd320b0b4dcf1485e34003945c79
     with:
       go-version-file: go.mod
