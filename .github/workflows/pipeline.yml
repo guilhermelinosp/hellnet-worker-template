@@ -49,3 +49,4 @@ jobs:
         with:
           version: ${{ needs.release.outputs.version }}
         secrets: inherit
+# reindextouch: force workflow_dispatch re-index (2026-09-14T18:56:21Z)
