@@ -1,6 +1,10 @@
 name: bisect-d
 on:
   pull_request:
+permissions:
+  contents: write
+  pull-requests: write
+  checks: write
 jobs:
   call-labeler:
     uses: guilhermelinosp/templates/.github/workflows/labeler.yml@745ef1ca8288cd320b0b4dcf1485e34003945c79
