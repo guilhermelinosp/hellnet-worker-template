@@ -1,0 +1,8 @@
+name: bisect-c
+on:
+  workflow_dispatch:
+jobs:
+  plain:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo plain-ok
