@@ -6,6 +6,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/guilhermelinosp/golang-worker-template/internal/env"
 	"log"
 	"os"
 	"os/signal"
@@ -22,7 +23,7 @@ var tel *telemetry.Telemetry
 func main() {
 	ops, err := telemetry.New(telemetry.Options{
 		ServiceName: "golang-worker-template",
-		Enabled:     os.Getenv("HELLNET_TELEMETRY_ENABLED") == "true",
+		Enabled:     env.String("HELLNET_TELEMETRY_ENABLED", "") == "true",
 	})
 	if err != nil {
 		log.Fatalf("failed to init telemetry: %v", err)
