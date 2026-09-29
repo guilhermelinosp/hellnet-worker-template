@@ -2,7 +2,10 @@ module github.com/guilhermelinosp/golang-worker-template
 
 go 1.27.0
 
-require github.com/guilhermelinosp/hellnet-lib-telemetry v1.5.2
+require (
+	github.com/guilhermelinosp/hellnet-lib-telemetry v1.5.2
+	github.com/joho/godotenv v1.5.1
+)
 
 require (
 	github.com/beorn7/perks v1.0.1 // indirect
@@ -16,7 +19,6 @@ require (
 	github.com/grafana/pyroscope-go/godeltaprof v0.1.11 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.30.0 // indirect
 	github.com/guilhermelinosp/hellnet-lib-environments v1.1.22 // indirect
-	github.com/joho/godotenv v1.5.1 // indirect
 	github.com/klauspost/compress v1.19.1 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
 	github.com/prometheus/client_golang v1.24.1 // indirect
