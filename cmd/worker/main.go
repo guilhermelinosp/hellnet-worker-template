@@ -6,7 +6,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/guilhermelinosp/golang-worker-template/internal/env"
 	"log"
 	"os"
 	"os/signal"
@@ -21,14 +20,11 @@ import (
 var tel *telemetry.Telemetry
 
 func main() {
-	ops, err := telemetry.New(telemetry.Options{
-		ServiceName: "golang-worker-template",
-		Enabled:     env.String("HELLNET_TELEMETRY_ENABLED", "") == "true",
-	})
+	t, err := telemetry.New()
 	if err != nil {
 		log.Fatalf("failed to init telemetry: %v", err)
 	}
-	tel = ops
+	tel = t
 	defer func() { _ = tel.Shutdown() }()
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -81,7 +77,7 @@ func workerLoop(ctx context.Context) {
 func runJob(ctx context.Context, t time.Time) {
 	do := func(c context.Context) error { return doWork(t) }
 	if tel != nil {
-		_ = tel.Worker(ctx, "tick", do)
+		_ = tel.Worker("tick", do)
 		return
 	}
 	_ = do(ctx)
