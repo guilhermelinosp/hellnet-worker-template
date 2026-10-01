@@ -1,4 +1,4 @@
-# golang-worker-template
+# hellnet-worker-template
 
 > GitHub template for Go Worker Service projects (Kafka consumers, background workers, etc.).
 
