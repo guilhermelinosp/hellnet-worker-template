@@ -1,4 +1,4 @@
-// Package main provides a minimal worker entry point for golang-worker-template.
+// Package main provides a minimal worker entry point for hellnet-worker-template.
 // Replace the work function with your actual background job logic
 // (e.g., Kafka consumer, SQS polling, scheduled tasks, etc.).
 package main

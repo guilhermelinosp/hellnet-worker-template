@@ -1,4 +1,4 @@
-module github.com/guilhermelinosp/golang-worker-template
+module github.com/guilhermelinosp/hellnet-worker-template
 
 go 1.27.0
 
