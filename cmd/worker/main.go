@@ -20,15 +20,20 @@ import (
 var tel *telemetry.Telemetry
 
 func main() {
-	t, err := telemetry.New()
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	t, err := telemetry.New(ctx)
 	if err != nil {
 		log.Fatalf("failed to init telemetry: %v", err)
 	}
 	tel = t
-	defer func() { _ = tel.Shutdown() }()
-
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
+	defer func() {
+		// flush with its own deadline: ctx is already cancelled on shutdown
+		flushCtx, flushCancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer flushCancel()
+		_ = tel.Close(flushCtx)
+	}()
 
 	sig := make(chan os.Signal, 1)
 	signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
@@ -39,20 +44,20 @@ func main() {
 		workerLoop(ctx)
 	}()
 
-	tel.Log().Info("worker started")
+	tel.Log(ctx).Info("worker started")
 
 	select {
 	case <-sig:
-		tel.Log().Info("shutdown signal received, stopping worker")
+		tel.Log(ctx).Info("shutdown signal received, stopping worker")
 		cancel()
 	case <-done:
-		tel.Log().Info("worker finished")
+		tel.Log(ctx).Info("worker finished")
 	}
 
 	select {
 	case <-done:
 	case <-time.After(10 * time.Second):
-		tel.Log().Error("worker shutdown timed out")
+		tel.Log(ctx).Error("worker shutdown timed out")
 	}
 }
 
@@ -64,7 +69,7 @@ func workerLoop(ctx context.Context) {
 		select {
 		case <-ctx.Done():
 			if tel != nil {
-				tel.Log().Info("worker loop exiting")
+				tel.Log(ctx).Info("worker loop exiting")
 			}
 			return
 		case t := <-ticker.C:
@@ -77,7 +82,7 @@ func workerLoop(ctx context.Context) {
 func runJob(ctx context.Context, t time.Time) {
 	do := func(c context.Context) error { return doWork(t) }
 	if tel != nil {
-		_ = tel.Worker("tick", do)
+		_ = tel.WorkerContext(ctx, "tick", do)
 		return
 	}
 	_ = do(ctx)
