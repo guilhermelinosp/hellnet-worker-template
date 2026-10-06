@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hellnet-worker-template
+  namespace: fast
+data:
+  HELLNET_ENVIRONMENT: Development
+  HELLNET_TELEMETRY_ENDPOINT: http://alloy.observability.svc.cluster.local:4318
